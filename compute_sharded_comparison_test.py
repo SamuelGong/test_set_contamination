@@ -127,10 +127,9 @@ def main(model_name_or_path,
     # Load tokenizer and tokenize the examples.
     t = AutoTokenizer.from_pretrained(model_name_or_path)
     tokenized_examples = [t.encode(ex) for ex in examples]
-    print(len(tokenized_examples))
-    print(examples[:3])
-    print(tokenized_examples[:3])
-    exit(0)
+    # print(len(tokenized_examples))
+    # print(examples[:3])
+    # print(tokenized_examples[:3])
 
     # Launch a Process for each GPU.
     gpus = GPUtil.getGPUs()
@@ -161,6 +160,8 @@ def main(model_name_or_path,
     shard_counts = [(x + 1 if i < num_examples % num_shards else x) 
        for i, x in enumerate([num_examples // num_shards] * num_shards)]
     shard_counts = np.asarray(shard_counts)
+    print(f"Shard counts: {shard_counts}")
+    exit(0)
 
     # Compute the starting index (into the list of examples) for each shard.
     shard_example_indices = [0] + np.cumsum(shard_counts).tolist()
