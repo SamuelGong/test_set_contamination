@@ -127,6 +127,7 @@ def main(model_name_or_path,
     # Load tokenizer and tokenize the examples.
     t = AutoTokenizer.from_pretrained(model_name_or_path)
     tokenized_examples = [t.encode(ex) for ex in examples]
+    exit(0)
 
     # Launch a Process for each GPU.
     gpus = GPUtil.getGPUs()
