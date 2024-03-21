@@ -160,14 +160,16 @@ def main(model_name_or_path,
     shard_counts = [(x + 1 if i < num_examples % num_shards else x) 
        for i, x in enumerate([num_examples // num_shards] * num_shards)]
     shard_counts = np.asarray(shard_counts)
-    print(f"Shard counts: {shard_counts}")
-    exit(0)
 
     # Compute the starting index (into the list of examples) for each shard.
     shard_example_indices = [0] + np.cumsum(shard_counts).tolist()
     for i, (start, end) in enumerate(zip(shard_example_indices, shard_example_indices[1:])):
 
         shard = tokenized_examples[start:end]
+        print(f"Shard {i}: {shard}")
+        print(f"---")
+        print(flatten(shard))
+        exit(0)
         
         # Logprobs in canonical order.
         worker_queues[0].put((
